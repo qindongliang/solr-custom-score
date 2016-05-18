@@ -10,6 +10,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Created by qindongliang on 2016/5/11.
+ * solrconfig.xml里面配置示例
+ <valueSourceParser name="myfunc" class="com.easy.custom.functionquery.MyValueParser" >
+ <lst name="strategy">
+ <int name="maxYears">100</int>
+ <int name="money_maxTimes">100</int>
+ <int name="money_base">100</int>
+ </lst>
+ </valueSourceParser>
+ *
+ *
+ *
  */
 public class MyValueParser extends ValueSourceParser {
 

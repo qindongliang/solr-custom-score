@@ -1,6 +1,6 @@
 package com.easy.custom.functionquery;
 
-import com.easy.custom.ScoreTools;
+import com.easy.custom.tools.ScoreTools;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.queries.function.FunctionValues;
 import org.apache.lucene.queries.function.ValueSource;
