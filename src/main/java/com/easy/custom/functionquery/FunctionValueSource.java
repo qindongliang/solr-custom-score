@@ -1,5 +1,6 @@
 package com.easy.custom.functionquery;
 
+import com.easy.custom.ScoreTools;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.queries.function.FunctionValues;
 import org.apache.lucene.queries.function.ValueSource;
@@ -16,13 +17,21 @@ import java.util.Map;
  */
 public class FunctionValueSource extends ValueSource {
     final static Logger log= LoggerFactory.getLogger(FunctionValueSource.class);
-    List<String> params;
+
 
     private  List<ValueSource>  valueSources;
+    //限制最大年份
+    private int maxYears;
+    //限制最大资金倍数，超过   money_basex倍数的钱，统一按成一个分数算
+    private int money_maxTimes;
+    //资金基数
+    private int money_base;
 
 
-    public FunctionValueSource(List<String> params,List<ValueSource> source) {
-        this.params = params;
+    public FunctionValueSource(int maxYears,int money_maxTimes,int money_base,List<ValueSource> source) {
+        this.maxYears=maxYears;
+        this.money_base=money_base;
+        this.money_maxTimes=money_maxTimes;
         this.valueSources=source;
     }
 
@@ -34,29 +43,14 @@ public class FunctionValueSource extends ValueSource {
         return new FloatDocValues(this) {
             @Override
             public float floatVal(int i) {
-
-//                  NumericDocValues year=null;
-//                  NumericDocValues money=null;
-
-
-//                    year = DocValues.getNumeric(leafReaderContext.reader(), "easy_year");
                     long year = y.longVal(i);
                     double money=m.doubleVal(i);
-//                    log.info("函数查询这啥东西：{} , {}",year,money);
-//                    money = DocValues.getNumeric(leafReaderContext.reader(), "easy_money");
-
-                    float year_score = 1;
-                    float money_socre = 1;
-                    if (year< 2010) {
-                        year_score = 5;
-                    }
-
-                    if (money > 600) {
-                        money_socre = 7;
-                    }
-
-                log.info("函数查询数据： docid:{} year:{} money:{} year_score:{} money_score:{} "
-                ,i,year,money,year_score,money_socre);
+                    float year_score = ScoreTools.getYearScore(year,maxYears);
+                    float money_socre = ScoreTools.getMoneyScore(money,money_maxTimes,money_base);
+//                log.info("得分详情：year:{} money:{} year_score:{} money_score:{} total:{}"
+//                ,year
+//                ,money,year_score,money_socre
+//                ,year_score*money_socre);
                 return year_score*money_socre;
             }
         };

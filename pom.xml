@@ -17,8 +17,8 @@
         <lucene-solr.version>5.1.0</lucene-solr.version>
         <!--httpclient的版本号-->
         <httpclient.version>4.3.1</httpclient.version>
-        <!--Google Guava的版本-->
-        <guava.version>18.0</guava.version>
+
+
 
     </properties>
 
@@ -45,11 +45,9 @@
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/joda-time/joda-time -->
+
 
 
 
