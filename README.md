@@ -7,7 +7,7 @@ solr自定义评分组件demo
  这种场景尤其是在电商类的一些垂直搜索中体现比较明显，比如，新商品加分，口碑好的加分，图片清晰的加分，商品介绍详细的加分，大促的商品加分等等等等
 如何把众多的业务因素加到的总的评分里面?
 
-###（二）实现策略
+### （二）实现策略
 （1）在索引的时候把众多的业务评分计算提前计算好，存储成一个字段，然后查询的时候根据这个字段排名<br/>
 
 评价：比较简单暴力，适合加权固定，不经常改变评分因素的业务使用，查询性能最高  ，更新，改变，调试评分比较麻烦<br/>
@@ -22,8 +22,8 @@ solr自定义评分组件demo
 
 评价：合理规划评分因素，动静分离，算是业务与技术的一个折中<br/>
 
-###（三）实现方式
-#####A : 通过重写QueryParser实现
+### （三）实现方式
+##### A : 通过重写QueryParser实现
 1，继承CustomScoreProvider类，重写customScore方法，从DocValues中动态读取评分有关因子，计算后，影响总评分<br/>
 2，继承CustomScoreQuery类，重写getCustomScoreProvider方法，需要用到1，返回自定义的CustomScoreProvider类
 到此，在lucene中就完事了，但是在solr中我们还需要继续<br/>
@@ -45,7 +45,7 @@ solr自定义评分组件demo
 7，打开solr的ui页面，指定defType，测试搜索，如果log不报错，就证明使用成功了<br/>
 ![测试搜索](http://dl2.iteye.com/upload/attachment/0117/3784/63af55df-80c2-3f02-bacc-3328850475fb.png) 
 
-#####B : 通过重写Function Query实现
+##### B : 通过重写Function Query实现
 1，继承ValueSource类，重写getValues方法，并在返回的方法中，完成评分计算逻辑<br/>
 2，继承ValueSourceParser类，并重写parser方法，返回1定义的类，
 建议在parser方法里面，获取ValueSource然后传入自定义的ValueSource类里面复用，
@@ -60,23 +60,13 @@ solr自定义评分组件demo
 4，打开solr的ui页面进行查询，不报错的话，即查询成功，可以看到和我们第一种方式的结果是一致的<br/>
 ![测试搜索](http://dl2.iteye.com/upload/attachment/0117/3786/873f910b-3f7e-3b20-97bd-7aa95934ec52.png) 
 
-###（四）总结
+### （四）总结
 其实核心功能还是使用lucene实现的，solr/es则是在lucene的基础上提供了强大灵活的插件机制，这样以来，我们就能更容易实现一些我们特殊需求的定制化。 
 ## 博客相关
 
-（1）[微信公众号（woshigcs）：同步更新](https://github.com/qindongliang/answer_sheet_scan/blob/master/imgs/gcs.jpg)
+（1）[csdn ： (暂时同步更新)](https://blog.csdn.net/u010454030)
 
-（2）[个人站点(2018之后，同步更新）](http://8090nixi.com/) 
-
-（3）[腾讯云社区，自动同步公众号文章](<http://qindongliang.iteye.com/>)
-
-（4）[csdn ： (暂时同步更新)](https://blog.csdn.net/u010454030)
-
-（5）[iteye（2018.05月之前所有的文章，之后弃用）](<http://qindongliang.iteye.com/>)  
-
-
-
-
+（2）[iteye（2018.05月之前所有的文章，之后弃用）](<http://qindongliang.iteye.com/>)  
 
 
 ## 我的公众号(woshigcs)
