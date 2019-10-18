@@ -14,7 +14,7 @@
         <!--gson版本号-->
         <gson.version>2.3.1</gson.version>
         <!--lucene-solr的版本号-->
-        <lucene-solr.version>7.4.0</lucene-solr.version>
+        <lucene-solr.version>8.2.0</lucene-solr.version>
         <!--httpclient的版本号-->
         <httpclient.version>4.3.6</httpclient.version>
 
